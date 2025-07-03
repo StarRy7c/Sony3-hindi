@@ -3,28 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enhanced Iframe Page</title>
+  <title>Focused Iframe with Popup</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      background: #0f2027;
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
     #frameContainer {
+      width: 100%;
       height: calc(100vh - 60px);
-      transition: height 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      background: #000;
     }
 
-    iframe {
-      width: 100%;
-      height: 100%;
+    #contentFrame {
+      width: 200%;
+      height: 200vh;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      position: absolute;
+      top: -200px; /* Adjust this to focus exactly on the video */
+      left: -100px;
       border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
 
     .button-container {
@@ -32,9 +38,9 @@
       justify-content: center;
       align-items: center;
       padding: 10px;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.8);
       backdrop-filter: blur(8px);
-      position: relative;
+      gap: 12px;
     }
 
     .join-btn {
@@ -45,15 +51,22 @@
       font-size: 16px;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      transition: 0.3s ease;
     }
 
     .join-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
     }
 
-    /* Popup styles */
+    .range-slider {
+      width: 160px;
+    }
+
+    .range-slider input {
+      width: 100%;
+    }
+
     .popup-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -62,24 +75,30 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: fadeIn 0.3s ease;
-      z-index: 999;
+      z-index: 1000;
       display: none;
+      animation: fadeIn 0.3s ease;
     }
 
     .popup {
       background: #fff;
-      padding: 30px;
+      padding: 25px;
       border-radius: 15px;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      max-width: 90%;
       animation: popIn 0.4s ease;
+      width: 90%;
+      max-width: 400px;
     }
 
     .popup h2 {
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       color: #222;
+    }
+
+    .popup p {
+      font-size: 15px;
+      color: #444;
     }
 
     .popup button {
@@ -92,7 +111,7 @@
     }
 
     .popup .cancel {
-      background-color: #ccc;
+      background-color: #ddd;
     }
 
     .popup .join {
@@ -110,17 +129,6 @@
       to {transform: scale(1);}
     }
 
-    /* Iframe height adjuster */
-    .range-slider {
-      width: 200px;
-      margin-left: auto;
-      margin-right: 10px;
-    }
-
-    .range-slider input {
-      width: 100%;
-    }
-
     @media (max-width: 600px) {
       .range-slider {
         display: none;
@@ -130,6 +138,7 @@
 </head>
 <body>
 
+  <!-- Iframe Container -->
   <div id="frameContainer">
     <iframe id="contentFrame"
       sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
@@ -140,197 +149,25 @@
     </iframe>
   </div>
 
+  <!-- Bottom Buttons -->
   <div class="button-container">
-    <button class="join-btn" onclick="openPopup()">Join Our Telegram</button>
+    <button class="join-btn" onclick="openPopup()">Join Telegram</button>
     <div class="range-slider">
-      <input type="range" min="50" max="100" value="100" onchange="resizeIframe(this.value)" />
+      <input type="range" min="50" max="100" value="100" onchange="resizeIframe(this.value)">
     </div>
   </div>
 
   <!-- Popup -->
   <div id="popupOverlay" class="popup-overlay">
     <div class="popup">
-      <h2>Join our Telegram Community!</h2>
-      <p>Get live updates, alerts and more!</p>
+      <h2>Join our Telegram!</h2>
+      <p>Don't miss live match alerts and latest updates 🏏</p>
       <button class="cancel" onclick="closePopup()">Cancel</button>
       <button class="join" onclick="joinTelegram()">Join Now</button>
     </div>
   </div>
 
-  <script>
-    function openPopup() {
-      document.getElementById("popupOverlay").style.display = "flex";
-    }
-
-    function closePopup() {
-      document.getElementById("popupOverlay").style.display = "none";
-    }
-
-    function joinTelegram() {
-      window.open("https://t.me/yourgroup", "_blank");
-      closePopup();
-    }
-
-    function resizeIframe(percent) {
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enhanced Iframe Page</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-
-    #frameContainer {
-      height: calc(100vh - 60px);
-      transition: height 0.3s ease;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      position: relative;
-    }
-
-    .join-btn {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
-
-    .join-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
-    }
-
-    /* Popup styles */
-    .popup-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease;
-      z-index: 999;
-      display: none;
-    }
-
-    .popup {
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      max-width: 90%;
-      animation: popIn 0.4s ease;
-    }
-
-    .popup h2 {
-      margin-bottom: 15px;
-      color: #222;
-    }
-
-    .popup button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 15px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-    }
-
-    .popup .cancel {
-      background-color: #ccc;
-    }
-
-    .popup .join {
-      background: #007bff;
-      color: white;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    @keyframes popIn {
-      from {transform: scale(0.8);}
-      to {transform: scale(1);}
-    }
-
-    /* Iframe height adjuster */
-    .range-slider {
-      width: 200px;
-      margin-left: auto;
-      margin-right: 10px;
-    }
-
-    .range-slider input {
-      width: 100%;
-    }
-
-    @media (max-width: 600px) {
-      .range-slider {
-        display: none;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div id="frameContainer">
-    <iframe id="contentFrame"
-      sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
-      allow="encrypted-media"
-      allowfullscreen="true"
-      scrolling="no"
-      src="https://tataplays.site/sonyliv.html?id=300255">
-    </iframe>
-  </div>
-
-  <div class="button-container">
-    <button class="join-btn" onclick="openPopup()">Join Our Telegram</button>
-    <div class="range-slider">
-      <input type="range" min="50" max="100" value="100" onchange="resizeIframe(this.value)" />
-    </div>
-  </div>
-
-  <!-- Popup -->
-  <div id="popupOverlay" class="popup-overlay">
-    <div class="popup">
-      <h2>Join our Telegram Community!</h2>
-      <p>Get live updates, alerts and more!</p>
-      <button class="cancel" onclick="closePopup()">Cancel</button>
-      <button class="join" onclick="joinTelegram()">Join Now</button>
-    </div>
-  </div>
-
+  <!-- Script -->
   <script>
     function openPopup() {
       document.getElementById("popupOverlay").style.display = "flex";
@@ -347,12 +184,6 @@
 
     function resizeIframe(percent) {
       const newHeight = `calc(${percent}vh - 60px)`;
-      document.getElementById("frameContainer").style.height = newHeight;
-    }
-  </script>
-
-</body>
-</html>  const newHeight = `calc(${percent}vh - 60px)`;
       document.getElementById("frameContainer").style.height = newHeight;
     }
   </script>
