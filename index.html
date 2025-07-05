@@ -3,54 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Viewer</title>
+  <title>Live TV Viewer</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background: #000;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
     }
 
-    #urlFormContainer {
-      display: none;
-      padding: 10px;
-      max-width: 500px;
+    /* Responsive video iframe */
+    .video-container {
+      width: 100%;
+      max-width: 900px;
       margin: 0 auto;
+      padding-top: 32px;
     }
-
     iframe {
       width: 100%;
-      height: 600px; /* Increased height */
+      height: 600px;
       border: none;
-      display: block;
       background: #111;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      transition: box-shadow 0.2s;
     }
-
-    @media screen and (max-width: 600px) {
+    iframe:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #0088cc;
+    }
+    @media (max-width: 700px) {
+      .video-container {
+        padding-top: 12px;
+      }
       iframe {
-        height: 350px; /* Increased mobile height */
+        height: 350px;
+        border-radius: 8px;
       }
     }
 
-    /* Join Telegram button below iframe */
-    .telegram-below-btn {
+    /* Join Telegram button */
+    .telegram-btn {
       display: inline-block;
-      background-color: #0088cc;
-      color: white;
-      padding: 14px 32px;
+      background: linear-gradient(90deg, #0088cc 60%, #006b9e 100%);
+      color: #fff;
+      padding: 16px 36px;
       border: none;
       border-radius: 8px;
       font-size: 20px;
       font-weight: 600;
       cursor: pointer;
-      margin: 28px auto 0 auto;
-      transition: background 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      margin: 32px auto 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: background 0.2s, box-shadow 0.2s;
     }
-    .telegram-below-btn:hover {
-      background-color: #006b9e;
+    .telegram-btn:hover {
+      background: linear-gradient(90deg, #006b9e 60%, #0088cc 100%);
+      box-shadow: 0 4px 16px rgba(0,136,204,0.18);
     }
 
     /* Popup styling */
@@ -60,20 +71,24 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 24px 20px 20px 20px;
-      background-color: #fff;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.32);
+      min-width: 260px;
+      background: #fff;
+      color: #222;
       border-radius: 12px;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.32);
       z-index: 1000;
       text-align: center;
-      min-width: 260px;
+      padding: 28px 20px 20px 20px;
     }
-
     #popupMessage h3 {
       margin-top: 0;
       color: #0088cc;
+      font-size: 1.3em;
     }
-
+    #popupMessage p {
+      margin: 10px 0 18px 0;
+      font-size: 1em;
+    }
     #popupMessage button {
       padding: 10px 22px;
       font-size: 16px;
@@ -82,43 +97,46 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 500;
+      transition: background 0.2s;
     }
-
     .popup-join {
       background-color: #0088cc;
       color: white;
     }
-
     .popup-join:hover {
       background-color: #006b9e;
     }
-
     .popup-cancel {
       background-color: #ccc;
       color: #000;
+    }
+    .popup-cancel:hover {
+      background-color: #bbb;
     }
   </style>
 </head>
 <body>
 
-  <!-- Iframe -->
-  <iframe
-    id="contentFrame"
-    sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
-    allow="encrypted-media"
-    allowfullscreen="true"
-    scrolling="no"
-    src="https://tataplays.site/sonyliv.html?id=300255">
-  </iframe>
+  <div class="video-container">
+    <!-- Video Iframe -->
+    <iframe
+      id="contentFrame"
+      sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+      allow="encrypted-media"
+      allowfullscreen="true"
+      scrolling="no"
+      src="https://tataplays.site/sonyliv.html?id=300255">
+    </iframe>
 
-  <!-- Join Telegram Button Below Iframe -->
-  <div style="text-align:center;">
-    <button class="telegram-below-btn" onclick="showPopup()">
-      Join Telegram
-    </button>
+    <!-- Join Telegram Button -->
+    <div style="text-align:center;">
+      <button class="telegram-btn" onclick="showPopup()">
+        Join Telegram
+      </button>
+    </div>
   </div>
 
-  <!-- Join Telegram Popup -->
+  <!-- Telegram Popup -->
   <div id="popupMessage">
     <h3>Join our Telegram Channel</h3>
     <p>Get instant updates and live links directly on Telegram.</p>
@@ -130,16 +148,14 @@
     function showPopup() {
       document.getElementById("popupMessage").style.display = "block";
     }
-
     function hidePopup() {
       document.getElementById("popupMessage").style.display = "none";
     }
-
     function joinTelegram() {
       window.open("https://telegram.me/+q1P8ArfVAlU1YzZl", "_blank");
       hidePopup();
     }
-    // Optional: Close popup on ESC key
+    // Close popup on ESC key
     document.addEventListener('keydown', function(e) {
       if (e.key === "Escape") hidePopup();
     });
