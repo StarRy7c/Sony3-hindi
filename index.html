@@ -22,9 +22,35 @@
 
     iframe {
       width: 100%;
-      height: calc(250vw * 9 / 16); /* True 16:9 ratio */
+      height: 600px; /* Increased height */
       border: none;
       display: block;
+      background: #111;
+    }
+
+    @media screen and (max-width: 600px) {
+      iframe {
+        height: 350px; /* Increased mobile height */
+      }
+    }
+
+    /* Join Telegram button below iframe */
+    .telegram-below-btn {
+      display: inline-block;
+      background-color: #0088cc;
+      color: white;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 28px auto 0 auto;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .telegram-below-btn:hover {
+      background-color: #006b9e;
     }
 
     /* Popup styling */
@@ -34,25 +60,28 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: #fefefe;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
+      padding: 24px 20px 20px 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.32);
+      border-radius: 12px;
       z-index: 1000;
       text-align: center;
+      min-width: 260px;
     }
 
     #popupMessage h3 {
       margin-top: 0;
+      color: #0088cc;
     }
 
     #popupMessage button {
-      padding: 10px 20px;
-      font-size: 15px;
-      margin: 10px 5px 0;
+      padding: 10px 22px;
+      font-size: 16px;
+      margin: 12px 8px 0 8px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-weight: 500;
     }
 
     .popup-join {
@@ -60,31 +89,13 @@
       color: white;
     }
 
+    .popup-join:hover {
+      background-color: #006b9e;
+    }
+
     .popup-cancel {
       background-color: #ccc;
       color: #000;
-    }
-
-    /* Optional: Floating button to trigger popup */
-    #telegramTrigger {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #0088cc;
-      color: white;
-      padding: 12px 16px;
-      border: none;
-      border-radius: 50px;
-      font-size: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 999;
-    }
-
-    @media screen and (max-width: 600px) {
-      iframe {
-        height: calc(100vw * 9 / 16);
-      }
     }
   </style>
 </head>
@@ -100,8 +111,12 @@
     src="https://tataplays.site/sonyliv.html?id=300255">
   </iframe>
 
-  <!-- Floating button to trigger popup -->
-  <button id="telegramTrigger" onclick="showPopup()">Join Telegram</button>
+  <!-- Join Telegram Button Below Iframe -->
+  <div style="text-align:center;">
+    <button class="telegram-below-btn" onclick="showPopup()">
+      Join Telegram
+    </button>
+  </div>
 
   <!-- Join Telegram Popup -->
   <div id="popupMessage">
@@ -124,6 +139,10 @@
       window.open("https://telegram.me/+q1P8ArfVAlU1YzZl", "_blank");
       hidePopup();
     }
+    // Optional: Close popup on ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape") hidePopup();
+    });
   </script>
 
 </body>
